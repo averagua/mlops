@@ -3,7 +3,6 @@ steps:
 # Clone repo to Cloud Build environment
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone',
-         '${_REPO_URL}', '.',
-         '--depth', '1',
+         '${_REPO_URL}',
          '--verbose']
   id: 'Clone Repo'
