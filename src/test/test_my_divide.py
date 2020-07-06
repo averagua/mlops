@@ -14,7 +14,7 @@
 """My_divide component unit tests."""
 
 import unittest
-from src.my_divide.my_divide import divide
+from my_divide.my_divide import divide
 
 class TestMyDivide(unittest.TestCase):
 
