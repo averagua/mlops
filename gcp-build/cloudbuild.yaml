@@ -13,3 +13,12 @@ steps:
   args: ['test/tests.sh']
   dir: 'src'
   id: 'Run Unit Tests'
+
+
+# Create the image for the my_divide component
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build',
+         '-t', 'gcr.io/$_PROJECT_ID/my_divide:$_TAG', '.']
+  dir: 'src/my_divide'
+  id: 'Building my_divide Image'
+  waitFor: ['Run Unit Tests']
