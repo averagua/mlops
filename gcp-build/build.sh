@@ -19,8 +19,6 @@ gcloud docker -- push gcr.io/ml-cicd-template/kfp-util:latest
 
 # Set substitutions
 SUBSTITUTIONS=\
-_REPO_URL='https://github.com/averagua/mlops.git',\
-_PROJECT_ID='mlops-282422',\
 _COMPUTE_ZONE='us-central1-a',\
 _CLUSTER_NAME='kubeflow-dev',\
 _GCS_LOCATION='mlops-282422/helloworld/pipelines',\
