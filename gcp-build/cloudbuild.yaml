@@ -14,54 +14,10 @@ steps:
   dir: 'src'
   id: 'Run Unit Tests'
 
-
-# Create the image for the my_divide component
+  # Create the image for the MNIST component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
-         '-t', 'gcr.io/$_PROJECT_ID/my_divide:${_TAG}', '.']
-  dir: 'src/my_divide'
-  id: 'Building my_divide Image'
+         '-t', 'gcr.io/$_PROJECT_ID/mnist:${_TAG}', '.']
+  dir: 'src/mnist'
+  id: 'Building MNIST Image'
   waitFor: ['Run Unit Tests']
-
-# Update component specs images
-- name: 'gcr.io/ml-cicd-template/kfp-util:latest'
-  entrypoint: 'python3'
-  args: ['pipeline/helper.py','update-specs',
-         '--repo_url', 'gcr.io/${_PROJECT_ID}',
-         '--image_tage', '{_TAG}']
-  dir: 'src'
-  id:  'Update Component Spec Images'
-
-# Compile pipeline
-- name: 'gcr.io/ml-cicd-template/kfp-util:latest'
-  entrypoint: 'dsl-compile'
-  args: ['--py', 'pipeline/workflow.py',
-         '--output', 'pipeline/pipeline.tar.gz',
-         '--disable-type-check']
-  dir: 'src'
-  id:  'Compile Pipeline'
-
-# Upload compiled pipeline to GCS
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'pipeline.tar.gz', 'settings.yaml', 'gs://${_GCS_LOCATION}/${_TAG}/']
-  dir: 'src/pipeline'
-  id:   'Upload Pipeline to GCS'
-
-# Deploy pipeline in KFP
-- name: 'gcr.io/ml-cicd-template/kfp-util:latest'
-  entrypoint: '/bin/sh'
-  args: ['-c', '/builder/kubectl.bash;
-         python3 helper.py deploy-pipeline
-         --package_path=pipeline.tar.gz
-         --version=\"$_TAG\"
-         --experiment=\"$_EXPERIMENT_NAME\"
-         --run']
-  dir: 'src/pipeline'
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=${_COMPUTE_ZONE}'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
-  id:  'Deploy & Run Pipeline'
-  waitFor: ['Compile Pipeline']
-
-images:
-- 'gcr.io/${_PROJECT_ID}/my_divide:${_TAG}'
