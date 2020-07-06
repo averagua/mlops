@@ -10,6 +10,6 @@ steps:
 # Run unit tests
 - name: 'python:3.6-slim-jessie'
   entrypoint: 'bash'
-  args: ['python -m unittest discover -v']
+  args: ['test/tests.sh']
   dir: 'src'
   id: 'Run Unit Tests'
