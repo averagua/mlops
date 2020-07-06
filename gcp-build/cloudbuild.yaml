@@ -3,6 +3,13 @@ steps:
 # Clone repo to Cloud Build environment
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone',
-         '${_REPO_URL}',
-         '--verbose']
-  id: 'Clone Repo'
+  '${_REPO_URL}',
+  '--verbose']
+  id: 'Clone Repository'
+
+# Run unit tests
+- name: 'python:3.6-slim-jessie'
+  entrypoint: 'bash'
+  args: ['python -m unittest discover -v']
+  dir: 'src'
+  id: 'Run Unit Tests'
