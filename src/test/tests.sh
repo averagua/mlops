@@ -13,4 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-python -m unittest discover -v
+python3 -m unittest discover -v
