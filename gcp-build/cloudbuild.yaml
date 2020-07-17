@@ -8,11 +8,11 @@ steps:
   id: 'Clone Repository'
 
 # Run unit tests
-- name: 'python:3.6-slim-jessie'
-  entrypoint: 'bash'
-  args: ['test/tests.sh']
-  dir: 'src'
-  id: 'Run Unit Tests'
+# - name: 'python:3.6-slim-jessie'
+#  entrypoint: 'bash'
+#  args: ['test/tests.sh']
+#  dir: 'src'
+#  id: 'Run Unit Tests'
 
   # Create the image for the MNIST component
 - name: 'gcr.io/cloud-builders/docker'
@@ -20,4 +20,4 @@ steps:
          '-t', 'gcr.io/$_PROJECT_ID/simple_model:$_TAG', '.']
   dir: 'src/simple_model'
   id: 'Building simple_model Image'
-  waitFor: ['Run Unit Tests']
+  # waitFor: ['Run Unit Tests']
