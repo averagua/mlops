@@ -17,7 +17,7 @@ steps:
   # Create the image for the MNIST component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
-         '-t', 'gcr.io/$_PROJECT_ID/mnist:${_TAG}', '.']
-  dir: 'src/mnist'
-  id: 'Building MNIST Image'
+         '-t', 'gcr.io/$_PROJECT_ID/simple_model:$_TAG', '.']
+  dir: 'src/simple_model'
+  id: 'Building simple_model Image'
   waitFor: ['Run Unit Tests']
