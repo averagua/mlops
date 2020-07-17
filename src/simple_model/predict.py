@@ -1,4 +1,7 @@
 from google.cloud import storage
 
-MODEL_PATH = 'mockup-model.dat'
-storage.Client()
+storage_client = storage.Client()
+model_path = 'mockup-model.dat'
+model = model_bucket.get_blob(model_path).download_to_filename('model.dat')
+print(model)
+print(dir(model))
